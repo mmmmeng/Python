@@ -16,8 +16,11 @@ table.align[columns[0]] = "1"
 table.padding_width = 5
 
 # 添加行
-table.add_row(["Turtle()", " ", "构造函数"])
+table.add_row(["Turtle()", "none", "构造函数"])
 table.add_row(["forward()", "像素值", "在当前方向移动像素值"])
+table.add_row(["setpos()", "x,y ", "将光标移动到指定像素点"])
+table.add_row(["up()", "none", "将光标抬起"])
+table.add_row(["down()", "none", "将光标放下"])
 
 
 # 输出表格
