@@ -8,19 +8,26 @@ def movePen(pen,x,y):
 
 # create new pen.
 pen = turtle.Turtle()
+pen2 = turtle.Turtle()
+movePen(pen2,0,100)
 window = turtle.Screen()
 window.bgcolor("#adceff")
 for i in range(20):
     pen.forward(i*5)
     pen.right(90)
+    pen2.forward(i * 5)
+    pen2.right(90)
 
 
 pen.forward(200)
+pen2.forward(200)
 #pen.right(90)
 
 for i in range(20):
     pen.forward((20-i)*5)
     pen.right(90)
+    pen2.forward((20 - i) * 5)
+    pen2.right(90)
 
 movePen(pen,0,-100)
 
