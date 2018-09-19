@@ -7,14 +7,15 @@ import time
 def proc1(pipe):
     print("on proc1")
     #print(pipe.recv())
-    pipe.send('hello')
+    #pipe.send('hello') #当pipe未双向的时候，就可以send和读取了 但1是传入hello的
     print('proc1 rec:',pipe.recv())
 
 # 定义线程中需要执行的方法
 def proc2(pipe):
     print("on proc2")
-    print('proc2 rec:',pipe.recv())
     pipe.send('hello,too')
+    print('proc2 rec:',pipe.recv())
+
 
 # 主要执行的方法块
 if __name__ == '__main__':
@@ -22,12 +23,10 @@ if __name__ == '__main__':
 
     # 获取线程间的通信对象，可以简单理解为，获取一个公共的数据存储区，不同的线程都可以调用里面的数据
     # 返回的pipe是元祖类型，里面包含两个值，为通道的两端 pipe[0]和pipe[1]
-    # 获取Pipe对象时，可以接受一个参数duplex，该参数的值默认为True。
-    # 当duplex = True，返回的pipe是双向通道，通道的两端均可以读写
-    # 当duplex = False，获取到的通道对象为单向通道，pipe[0]只可以接受（读取）数据，pipe[1]只可以发送（写入）数据
+    # 获取Pipe对象时，可以接受一个参数duplex，该参数的值默认为True。我们现在看到的是默认返回的管道，也就是双通的 管道两头都能写入内容与读取内容
 
-    pipe = multiprocessing.Pipe()
-    #pipe = multiprocessing.Pipe(duplex=False)
+    #pipe = multiprocessing.Pipe()
+    pipe = multiprocessing.Pipe(duplex=False) #当duplex=False的时候，会返回一个单向的通道这个时候，通道的两端，读写功能就不完整了
     #print("pipe type is :",type(pipe))
     #print("pipe[0] type is :",type(pipe[0]))
     #print("pipe[1] type is :", type(pipe[1]))
@@ -38,16 +37,10 @@ if __name__ == '__main__':
 
     # start()用来启动线程
     p1.start()
-
-    for i in range(5):
-        time.sleep(1)
-        print("sleep ",i)
-    else:
-        print("wake up...")
-
     #print("p1 is alive:", p1.is_alive())
     p2.start()
     # join()用来停止线程
     p1.join()
     #print("p1 is alive:",p1.is_alive())
     p2.join()
+
